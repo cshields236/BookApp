@@ -7,6 +7,7 @@ bookList =[]
 titleArr =[]
 authorArr = []
 ratingArr = []
+coversArr = []
 
 html_file = response.text
 soup = BeautifulSoup(html_file, 'html.parser')
@@ -22,18 +23,29 @@ for author in toRead_author:
     authorArr.append(author.getText().replace('author','').replace('*', '').strip())
 
 toRead_rating =  soup.findAll('td', 'field avg_rating', 'title')
-for author in toRead_rating:
-    ratingArr.append(author.getText().replace('avg rating','').strip())
+for rating in toRead_rating:
+    ratingArr.append(rating.getText().replace('avg rating','').strip())
 
-## TODO Use classes instead
-## TODO Display all data together 
+toRead_isbn =  soup.findAll('td', 'field isbn', 'title')
+for isbn in toRead_isbn:
+    isbn.getText().replace('isbn', '').strip()
+
+
+
+for cover in soup.findAll( 'img'): 
+    c = cover.get('src')
+    if '.jpg' in str(c):
+        coversArr.append(c)
+
+print(coversArr)
+
 ## TODO Pump out a random book 
 ## TODO Learn about making a front end for this 
 
-for l in range(len(titleArr)):
-    b = Book()
-    b.addDetails(titleArr[l], authorArr[l], ratingArr[l])
-    bookList.append(b)
+# for l in range(len(titleArr)):
+#     b = Book() 
+#     b.addDetails(titleArr[l], authorArr[l], ratingArr[l])
+#     bookList.append(b)
 
 
-print(bookList[1].title + bookList[1].author)
+# print(bookList[1].title + bookList[1].author)
